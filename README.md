@@ -127,7 +127,7 @@ A minimal statusline for Claude Code: context window, 5-hour quota, and 7-day qu
 Color coding: green below 70%, yellow at 70-85%, red above 85% for context; blue, magenta, red for quota thresholds. No progress bars, no noise.
 
 ```bash
-curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.25.0/scripts/setup-statusline.sh | bash
+curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.26.0/scripts/setup-statusline.sh | bash
 ```
 
 **Codex**
@@ -152,10 +152,10 @@ Optional rule for English practice. When your prompt contains an English mistake
 
 ```bash
 # Claude Code
-curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.25.0/scripts/setup-rule.sh | bash -s -- english claude-code
+curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.26.0/scripts/setup-rule.sh | bash -s -- english claude-code
 
 # Codex
-curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.25.0/scripts/setup-rule.sh | bash -s -- english codex
+curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.26.0/scripts/setup-rule.sh | bash -s -- english codex
 ```
 
 ### Anti-Patterns
@@ -163,10 +163,10 @@ curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.25.0/scripts/setup-rule.
 Optional always-on guardrails for cross-skill behaviors: stop acting before reading, no hallucinated paths, no scope creep, no unsolicited summaries. Skill-agnostic, applies in every session.
 
 ```bash
-curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.25.0/scripts/setup-rule.sh | bash -s -- anti-patterns claude-code
+curl -sL https://raw.githubusercontent.com/tw93/Waza/v3.26.0/scripts/setup-rule.sh | bash -s -- anti-patterns claude-code
 ```
 
-Use `codex` instead of `claude-code` for Codex. Curl URLs are pinned to the current release tag for reproducibility; swap `v3.25.0` for `main` if you want bleeding-edge scripts.
+Use `codex` instead of `claude-code` for Codex. Curl URLs are pinned to the current release tag for reproducibility; swap `v3.26.0` for `main` if you want bleeding-edge scripts.
 
 ## Uninstall
 
