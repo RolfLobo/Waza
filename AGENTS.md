@@ -107,6 +107,7 @@ Use this path for any new skill or meaningful behavior change:
 ## Commit And Release
 
 - Commit convention: `{type}: {description}` where type is `feat`, `fix`, `refactor`, `docs`, or `chore`.
+- Keep commits atomic. A commit touching more than ~20 files should split into packaging / docs / scripts / per-skill units, unless every file is the same codegen output from `make regenerate`.
 - Release tags use lowercase `v{version}`.
 - Rebuild packaged artifacts before publishing release assets. Run `make package` before publishing; CI should upload the ZIP on published releases.
 - After a GitHub release is published and assets are verified, add every positive release reaction with `gh api`: `+1`, `laugh`, `heart`, `hooray`, `rocket`, and `eyes`. Resolve the release id from the tag, POST each reaction to `repos/<owner>/<repo>/releases/<id>/reactions`, then re-read reactions to confirm them.
