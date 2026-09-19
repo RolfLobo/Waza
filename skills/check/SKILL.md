@@ -72,7 +72,7 @@ Before reviewing, extract project constraints from repository context:
 2. Inspect public project files only as needed: README, AGENTS/CLAUDE instructions when present, package manifests, lockfiles, build configs, test configs, workflow files, and release notes.
 3. Compress the findings into review context: verification commands, protected or generated files, release artifacts, domain risks, and public reply rules.
 4. Apply the stricter rule when project context and this skill overlap.
-5. If project docs or CI name a verification command, prefer that over auto-detection.
+5. If project docs or CI name a verification command, prefer that over auto-detection, and read the workflow rather than the sentence describing it. A doc claiming CI enforces something is a claim; where no job runs it, trusting the sentence skips the manual check it replaced. A linter, a compiled helper, or a platform tier present locally but not in CI, or the reverse, means a green run on one side predicts nothing about the other.
 
 For the context shape, see `references/project-context.md`.
 
