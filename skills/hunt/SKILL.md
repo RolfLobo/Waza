@@ -17,7 +17,7 @@ A patch applied to a symptom creates a new bug somewhere else.
 - Done when: one sentence explains the cause, every observed symptom fits it, and the fix or handoff is verified against a reproducible check.
 - Evidence: source trace, repro command or UI path, logs or state, targeted test/build output, and runtime evidence for UI or native defects.
 - Output: root cause, fix or handoff, verification result, and any unswept sibling risks.
-- Authorization: "diagnose", "investigate", "why", "look into", "排查", "看看", or equivalent is report-only. Apply a fix only when the current turn explicitly asks to fix, change, implement, or optimize; root-cause proof is still required first.
+- Authorization: "diagnose", "investigate", "why", "look into", "排查", "看看", or equivalent is report-only. Apply a fix only when the current request explicitly asks to fix, change, implement, or optimize, or when an authorization to do so is still in force for this same unfinished task with the action, scope, and goal unchanged; root-cause proof is still required first. A fix authorization never carries commit, push, publish, or any destructive action with it.
 
 **Do not touch code until you can state the root cause in one sentence:**
 > "I believe the root cause is [X] because [evidence]."
