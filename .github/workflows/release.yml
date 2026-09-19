@@ -2,17 +2,23 @@ name: release
 on:
   release:
     types: [published]
+# Two release events close together must not run two npm publishes at once;
+# queue rather than cancel, since a half-finished publish is worse than a wait.
+concurrency:
+  group: release-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
 jobs:
   upload-zip:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Assert release tag matches VERSION
         run: test "v$(cat VERSION)" = "${{ github.event.release.tag_name }}"
       - name: Pin Python (keep CI behavior reproducible from local dev)
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Install dependencies
@@ -53,8 +59,8 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
