@@ -790,3 +790,50 @@ def test_nested_agents_md_is_not_flagged_without_a_root_claude_md(tmp_path: Path
     out = run_context(project, home)
     assert "nested_agents_md: 1" in out
     assert "hides" not in out
+
+
+def test_both_mode_does_not_hide_nested_agents_md(tmp_path: Path):
+    project = tmp_path / "project"
+    home = tmp_path / "home"
+    project.mkdir()
+    (project / "AGENTS.md").write_text("# Guide\n", encoding="utf-8")
+    (project / "CLAUDE.md").write_text("# Claude only\n", encoding="utf-8")
+    nested = project / "crates"
+    nested.mkdir()
+    (nested / "AGENTS.md").write_text("# Crate guide\n", encoding="utf-8")
+    write_json(
+        home / ".claude" / "settings.json",
+        {
+            "pluginConfigs": {
+                "agents-md@builtin": {
+                    "options": {"instructionFiles": "claude-md-and-agents-md"}
+                }
+            }
+        },
+    )
+    out = run_context(project, home)
+    assert "nested_agents_md: 1" in out
+    assert "hides" not in out
+
+
+def test_both_mode_still_hides_nested_when_claude_md_aliases_agents(tmp_path: Path):
+    project = tmp_path / "project"
+    home = tmp_path / "home"
+    project.mkdir()
+    (project / "AGENTS.md").write_text("# Guide\n", encoding="utf-8")
+    (project / "CLAUDE.md").symlink_to("AGENTS.md")
+    nested = project / "crates"
+    nested.mkdir()
+    (nested / "AGENTS.md").write_text("# Crate guide\n", encoding="utf-8")
+    write_json(
+        home / ".claude" / "settings.json",
+        {
+            "pluginConfigs": {
+                "agents-md@builtin": {
+                    "options": {"instructionFiles": "claude-md-and-agents-md"}
+                }
+            }
+        },
+    )
+    out = run_context(project, home)
+    assert "a root CLAUDE.md hides 1 nested AGENTS.md from Claude" in out

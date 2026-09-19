@@ -1319,7 +1319,16 @@ def main() -> int:
     claude_reads_agents = yes(agents) == "yes" and agents_fallback_on
     if yes(global_claude) == "no" and yes(claude) == "no" and not claude_reads_agents:
         claude_findings.append("Claude instruction surface not found")
-    if nested_agents and yes(claude) == "yes":
+    # A root CLAUDE.md switches the whole project off the AGENTS.md path, so the
+    # nested guides stop loading with it. The one exception is the both mode,
+    # where AGENTS.md is read beside CLAUDE.md and the walk still reaches them,
+    # unless CLAUDE.md IS that AGENTS.md, in which case the deduplicated chain
+    # is skipped and the nested files go dark again. Measured all four ways.
+    both_mode = instructions_mode == "claude-md-and-agents-md"
+    nested_hidden = nested_agents and yes(claude) == "yes" and (
+        not both_mode or claude_aliases_agents
+    )
+    if nested_hidden:
         claude_findings.append(
             f"a root CLAUDE.md hides {len(nested_agents)} nested AGENTS.md from Claude"
         )
